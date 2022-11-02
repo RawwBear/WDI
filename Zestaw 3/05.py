@@ -1,18 +1,20 @@
-def find_10_largest(seq):
-    # we need to remove zero if it's last because we don't want '' in our list
-    if str(seq)[-1] == '0':
-        seq = seq[:-1]
-    if str(seq)[0] == '0':
-        seq = seq[1:]
-    seq = [int(i) for i in str(seq).split('0')]
-    # if seq[-1] == '': seq.pop()
-    #input sequence: 10120130230...where 0 is the end-of-data marker
-    #sort the sequence in descending order
-    for i in range(len(seq)-1):
-        for j in range(i+1, len(seq)):
-            if seq[i] < seq[j]:
-                seq[i], seq[j] = seq[j], seq[i]
-    return seq
+'''
+Program need to return 10th largest unique value. User enters numbers untill he enters zero which means
+end of the sequence entry.
+'''
+def type_in(arr, num):
+    for i in range(len(arr)):
+        if num > arr[i]:
+            num, arr[i] = arr[i], num
+        elif num == arr[i]:#prevent type in repeated values
+            break
+    return arr
 
-print(find_10_largest(12112000111))
-
+if __name__ == "__main__":
+    arr = [0 for _ in range(10)]#create array filled with zeros
+    num = 1
+    while num != 0:
+        num = int(input("Enter the number: "))
+        arr = type_in(arr, num)
+    print(arr)
+    print(arr[9])
