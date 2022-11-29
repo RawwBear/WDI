@@ -1,14 +1,34 @@
 from random import randrange
-def ss_with_biggest_sum(n):
-    array = [[randrange(-20, 31)for _ in range(n)]for _ in range(n)]
+n = int(input("Enter value of the n: "))
+array = [[randrange(-20, 31)for _ in range(n)]for _ in range(n)]
+for i in range(n):
+    print(array[i])
+
+def count_sum(i,j,n):
+    len_horizon, len_vertical = 1, 1
+    sum_horizon, sum_vertical = array[i][j], array[i][j]
+    x, y = i+1, j+1
+    #add up horizontally
+    while x < n and len_horizon < 10:
+        sum_horizon += array[x][j]
+        len_horizon += 1
+        x +=1
+    while y < n and len_vertical < 10:
+        sum_vertical += array[i][y]
+        len_vertical += 1
+        y += 1
+    if sum_horizon > sum_vertical:
+        return sum_horizon
+    return sum_vertical
+
+def sum_ss():
+    maxi = 0
     for i in range(n):
-        print(array[i])
-    #create two 1D arrays for elements of the 2D array by rows and by columns
-    linear_row, linear_col = [array[i][j] for i in range(n) for j in range(n)], [array[j][i]for i in range(n) for j in range(n)]
-    max_sum = 0
-    l, r = linear_row[0], linear_row[1]
-    while l < n-1:
-        if array[l] + array[r] > max_sum:
-            max_sum = array[l] + array[r]
+        for j in range(n):
+            count = count_sum(i,j,n)
+            if count > maxi:
+                maxi = count
+    return maxi
+
 if __name__ == '__main__':
-    print(ss_with_biggest_sum(5))
+    print(sum_ss())
